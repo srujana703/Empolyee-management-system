@@ -202,7 +202,23 @@ td{
     border-bottom:1px solid #ddd;
     text-align:center;
 }
+.action-buttons{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    align-items:center;
+}
 
+.editBtn,
+.deleteBtn{
+    width:90px;
+    padding:9px;
+    border:none;
+    border-radius:6px;
+    color:white;
+    cursor:pointer;
+    font-size:14px;
+}
 tbody tr:hover{
     background:#f8fafc;
 }

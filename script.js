@@ -30,6 +30,7 @@ const toast = document.getElementById("toast");
 const searchInput = document.getElementById("searchInput");
 
 const phone = document.getElementById("phone");
+const exportBtn = document.getElementById("exportBtn");
 
 // =======================
 // Initialize
@@ -159,11 +160,10 @@ if(!phoneRegex.test(phone.value.trim())){
     return true;
 
 }
-
+ 
 // =======================
 // Form Submit
 // =======================
-
 form.addEventListener("submit", function(e){
 
     e.preventDefault();
@@ -460,6 +460,75 @@ function exportCSV(){
         csv += `"${employee.id}","${employee.name}","${employee.email}","${employee.phone || ""}","${employee.department}","${employee.position}","${employee.joiningDate}"\n`;
 
     });
+
+}
+// ==========================================
+// Export Employees to CSV
+// ==========================================
+
+exportBtn.addEventListener("click", exportToCSV);
+
+function exportToCSV(){
+
+    if(employees.length === 0){
+
+        showToast("No employees available to export","error");
+
+        return;
+
+    }
+
+    const headers = [
+
+        "Employee ID",
+        "Name",
+        "Email",
+        "Department",
+        "Position",
+        "Joining Date"
+
+    ];
+
+    let csv = headers.join(",") + "\n";
+
+    employees.forEach(employee=>{
+
+        csv += [
+
+            employee.id,
+            employee.name,
+            employee.email,
+            employee.department,
+            employee.position,
+            employee.joiningDate
+
+        ].join(",") + "\n";
+
+    });
+
+    const blob = new Blob([csv],{
+
+        type:"text/csv;charset=utf-8;"
+
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+
+    link.download = "employees.csv";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+
+    showToast("CSV Exported Successfully","success");
 
 }
 
