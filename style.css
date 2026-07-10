@@ -37,8 +37,9 @@ header h1{
 
 .container{
     width:100%;
-    max-width:1400px;
-    margin:auto;
+    max-width:100%;
+    margin:0 auto;
+    padding:0 20px;
 }
 
 /* Statistics */
@@ -77,8 +78,8 @@ header h1{
 
 .main{
     display:grid;
-    grid-template-columns:360px 1fr;
-    gap:25px;
+    grid-template-columns:300px 1fr;
+    gap:15px;
 }
 
 /* Form */
@@ -92,7 +93,7 @@ header h1{
 
 .form-container h2{
     color:#2563eb;
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
 
 .input-group{
@@ -152,9 +153,58 @@ button:hover{
     background:#f59e0b;
     display:none;
 }
+/* Phone Error Message */
+.form-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
 
+.form-group label{
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.form-group input,
+.form-group select{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 5px rgba(37,99,235,0.3);
+}
+.error-message{
+
+    color:red;
+
+    font-size:13px;
+
+    margin-top:5px;
+
+    display:block;
+
+    font-weight:500;
+
+}
+
+/* Red Border */
+
+.input-error{
+
+    border:2px solid red !important;
+
+}
 .clearBtn{
-    background:#dc2626;
+    background:#2563eb;
 }
 
 #exportBtn{
@@ -162,6 +212,16 @@ button:hover{
 }
 
 /* Table */
+.error-message{
+    color:red;
+    font-size:13px;
+    margin-top:5px;
+    display:block;
+}
+
+.input-error{
+    border:2px solid red !important;
+}
 
 .table-container{
     background:white;
@@ -202,38 +262,48 @@ td{
     border-bottom:1px solid #ddd;
     text-align:center;
 }
+/* Action Buttons Container */
+/* Action Buttons */
+
+/* Action Buttons */
+
 .action-buttons{
     display:flex;
     flex-direction:column;
-    gap:8px;
     align-items:center;
+    justify-content:center;
+    gap:10px;
 }
 
 .editBtn,
 .deleteBtn{
-    width:90px;
-    padding:9px;
+    width:75px;
+    height:32px;
+    padding:5px 8px;
     border:none;
     border-radius:6px;
-    color:white;
+    color:#fff;
+    font-size:13px;
+    font-weight:500;
     cursor:pointer;
-    font-size:14px;
+    transition:0.3s;
 }
-tbody tr:hover{
-    background:#f8fafc;
-}
-
-/* Action Buttons */
 
 .editBtn{
-    background:#f59e0b;
-    margin-right:5px;
+    background:#4afd71;
+}
+
+.editBtn:hover{
+    background:#5faa55;
 }
 
 .deleteBtn{
-    background:#dc2626;
+    background:#16a34a;
 }
 
+.deleteBtn:hover{
+    background:#68e997;
+}
 /* Empty Row */
 
 .empty{
@@ -291,12 +361,14 @@ header h1{
     font-size:26px;
 }
 
-button{
-    width:100%;
-}
+@media(max-width:768px){
 
 .buttons{
     flex-direction:column;
+}
+
+.buttons button{
+    width:100%;
 }
 
 }
@@ -319,5 +391,5 @@ header{
 .card h2{
     font-size:30px;
 }
-
+}
 }

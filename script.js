@@ -106,51 +106,56 @@ function saveToStorage(){
 
 function validateForm(){
 
+    // Clear previous phone error
+    phoneError.textContent = "";
+    phone.classList.remove("input-error");
+
     if(
-    empId.value.trim()==="" ||
-    name.value.trim()==="" ||
-    email.value.trim()==="" ||
-    phone.value.trim()==="" ||
-    department.value==="" ||
-    position.value.trim()==="" ||
-    joiningDate.value===""
+        empId.value.trim() === "" ||
+        name.value.trim() === "" ||
+        email.value.trim() === "" ||
+        phone.value.trim() === "" ||
+        department.value === "" ||
+        position.value.trim() === "" ||
+        joiningDate.value === ""
+    ){
 
-){
-    showToast("All fields are required","error");
-    return false;
-}
+        showToast("All fields are required","error");
+        return false;
+    }
 
-    const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Email Validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if(!emailRegex.test(email.value.trim())){
 
         showToast("Invalid Email","error");
+        return false;
+
+    }
+
+    // Phone Validation
+    const phoneRegex = /^[6-9]\d{9}$/;
+
+    if(!phoneRegex.test(phone.value.trim())){
+
+        phoneError.textContent = "Enter a valid 10-digit phone number.";
+        phone.classList.add("input-error");
 
         return false;
 
     }
 
-    const phoneRegex = /^[6-9]\d{9}$/;
+    // Duplicate Employee ID
+    if(editingEmployeeId === null){
 
-if(!phoneRegex.test(phone.value.trim())){
-
-    showToast("Enter a valid 10-digit phone number","error");
-
-    return false;
-
-}
-    if(editingEmployeeId===null){
-
-        const duplicate=employees.some(employee=>
-
-            employee.id===empId.value.trim()
-
+        const duplicate = employees.some(employee =>
+            employee.id === empId.value.trim()
         );
 
         if(duplicate){
 
             showToast("Employee ID already exists","error");
-
             return false;
 
         }
@@ -259,72 +264,67 @@ function updateEmployee(){
 // Render Table
 // =======================
 
-function renderTable(list=employees){
+// =======================
+// Render Table
+// =======================
 
-    employeeTable.innerHTML="";
+function renderTable(list = employees) {
 
-    if(list.length===0){
+    employeeTable.innerHTML = "";
 
-        employeeTable.innerHTML=`
+    if (list.length === 0) {
 
-        <tr>
-
-        <td colspan="7" class="empty">
-
-        No employees found
-
-        </td>
-
-        </tr>
-
+        employeeTable.innerHTML = `
+            <tr>
+                <td colspan="8" class="empty">
+                    No employees found
+                </td>
+            </tr>
         `;
 
         return;
-
     }
 
-    list.forEach(employee=>{
+    list.forEach(employee => {
 
-        employeeTable.innerHTML+=`
+        employeeTable.innerHTML += `
+            <tr>
 
-        <tr>
+                <td>${employee.id}</td>
 
-        <td>${employee.id}</td>
+                <td>${employee.name}</td>
 
-        <td>${employee.name}</td>
+                <td>${employee.email}</td>
 
-        <td>${employee.email}</td>
+                <td>${employee.phone}</td>
 
-        <td>${employee.phone}</td>
+                <td>${employee.department}</td>
 
-        <td>${employee.department}</td>
+                <td>${employee.position}</td>
 
-        <td>${employee.position}</td>
+                <td>${employee.joiningDate}</td>
 
-        <td>${employee.joiningDate}</td>
+                <td>
 
-        <td>
+                    <div class="action-buttons">
 
-        <button
-        class="editBtn"
-        onclick="editEmployee('${employee.id}')">
+                        <button
+                            class="editBtn"
+                            onclick="editEmployee('${employee.id}')">
+                            Edit
+                        </button>
 
-        Edit
+                        <button
+                            class="deleteBtn"
+                            onclick="deleteEmployee('${employee.id}')">
+                            Delete
+                        </button>
 
-        </button>
+                    </div>
 
-        <button
-        class="deleteBtn"
-        onclick="deleteEmployee('${employee.id}')">
+                </td>
 
-        Delete
-
-        </button>
-
-        </td>
-
-        </tr>
-
+            </tr>
         `;
 
     });
@@ -531,5 +531,11 @@ function exportToCSV(){
     showToast("CSV Exported Successfully","success");
 
 }
+phone.addEventListener("input", function(){
+
+    phoneError.textContent = "";
+    phone.classList.remove("input-error");
+
+});
 
 })();
