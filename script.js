@@ -31,7 +31,7 @@ const searchInput = document.getElementById("searchInput");
 
 const phone = document.getElementById("phone");
 const exportBtn = document.getElementById("exportBtn");
-
+const nameError = document.getElementById("nameError");
 // =======================
 // Initialize
 // =======================
@@ -104,23 +104,39 @@ function saveToStorage(){
 // Validate Form
 // =======================
 
-function validateForm(){
 
-    // Clear previous phone error
+   function validateForm(){
+
+    // Clear previous errors
     phoneError.textContent = "";
     phone.classList.remove("input-error");
 
-    if(
-        empId.value.trim() === "" ||
-        name.value.trim() === "" ||
-        email.value.trim() === "" ||
-        phone.value.trim() === "" ||
-        department.value === "" ||
-        position.value.trim() === "" ||
-        joiningDate.value === ""
-    ){
+    nameError.textContent = "";
+    name.classList.remove("input-error");
 
+    if(
+        empId.value.trim()==="" ||
+        name.value.trim()==="" ||
+        email.value.trim()==="" ||
+        phone.value.trim()==="" ||
+        department.value==="" ||
+        position.value.trim()==="" ||
+        joiningDate.value===""
+
+    ){
         showToast("All fields are required","error");
+        return false;
+    }
+
+    // Name Validation
+    const nameRegex = /^[A-Za-z ]+$/;
+
+    if(!nameRegex.test(name.value.trim())){
+
+        nameError.textContent = "Name should contain only letters.";
+
+        name.classList.add("input-error");
+
         return false;
     }
 
@@ -130,8 +146,8 @@ function validateForm(){
     if(!emailRegex.test(email.value.trim())){
 
         showToast("Invalid Email","error");
-        return false;
 
+        return false;
     }
 
     // Phone Validation
@@ -140,31 +156,31 @@ function validateForm(){
     if(!phoneRegex.test(phone.value.trim())){
 
         phoneError.textContent = "Enter a valid 10-digit phone number.";
+
         phone.classList.add("input-error");
 
         return false;
-
     }
 
     // Duplicate Employee ID
-    if(editingEmployeeId === null){
+    if(editingEmployeeId===null){
 
         const duplicate = employees.some(employee =>
-            employee.id === empId.value.trim()
+            employee.id===empId.value.trim()
         );
 
         if(duplicate){
 
             showToast("Employee ID already exists","error");
-            return false;
 
+            return false;
         }
 
     }
 
     return true;
-
 }
+      
  
 // =======================
 // Form Submit
@@ -535,6 +551,13 @@ phone.addEventListener("input", function(){
 
     phoneError.textContent = "";
     phone.classList.remove("input-error");
+
+});
+name.addEventListener("input", function(){
+
+    nameError.textContent = "";
+
+    name.classList.remove("input-error");
 
 });
 
