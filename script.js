@@ -58,7 +58,7 @@ function init(){
 
     renderTable();
 
-    updateEmployeeCount();
+   
 
 }
 
@@ -351,11 +351,7 @@ function renderTable(list = employees) {
 // Employee Count
 // =======================
 
-function updateEmployeeCount(){
 
-    employeeCount.textContent=employees.length;
-
-}
 
 // =======================
 // Clear Form
