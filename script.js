@@ -32,6 +32,7 @@ const searchInput = document.getElementById("searchInput");
 const phone = document.getElementById("phone");
 const exportBtn = document.getElementById("exportBtn");
 const nameError = document.getElementById("nameError");
+
 // =======================
 // Initialize
 // =======================
